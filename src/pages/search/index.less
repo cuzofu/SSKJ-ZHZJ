@@ -1,0 +1,42 @@
+@import '~antd-mobile/dist/antd-mobile.less';
+
+:global {
+  .am-search {
+    background: #efeff4;
+  }
+  .am-list-header {
+    background-color: #fff;
+  }
+  .am-search-synthetic-ph {
+    width: 200px;
+  }
+}
+
+.searchKeyWord {
+  sup {
+    margin-left: 12px;
+    padding: 0 3px;
+    background-color: #fff;
+    border-radius: 2px;
+    color: #f19736;
+    border: 1px solid #f19736;
+  }
+}
+
+.searchTag {
+  display: flex;
+  padding-top: 9px;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  :global {
+    .am-tag {
+      margin-left: 12px;
+      margin-bottom: 9px;
+      background-color: #efeff4;
+    }
+    .am-list-content {
+      line-height: 1.6 !important;
+    }
+  }
+}
