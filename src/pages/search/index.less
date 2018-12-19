@@ -7,6 +7,9 @@
   .am-list-header {
     background-color: #fff;
   }
+  .am-search-input .am-search-synthetic-ph {
+    text-align: left;
+  }
   .am-search-synthetic-ph {
     width: 200px;
   }
@@ -37,6 +40,17 @@
     }
     .am-list-content {
       line-height: 1.6 !important;
+    }
+  }
+}
+
+.resultCard {
+  min-height: inherit;
+  padding-bottom: 0;
+  :global {
+    .am-card-header-extra {
+      width: 50px;
+      flex: none;
     }
   }
 }
