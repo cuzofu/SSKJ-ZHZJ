@@ -13,7 +13,7 @@ import styles from './index.less';
 import Ellipsis from "@/components/Ellipsis";
 
 const CompareButton = ({ content, type, disabled, ...restProps }) => (
-  <div className={styles.placeholder} {...restProps}>
+  <div className={styles.compareButton} {...restProps}>
     <Button type={type} disabled={disabled} inline size="small">{content}</Button>
   </div>
 );
@@ -164,7 +164,7 @@ class Search extends PureComponent {
                     <span>搜索历史</span>
                   </Flex.Item>
                   <Flex.Item>
-                    <div className={styles.placeholder}>
+                    <div className={styles.clearSearchHistory}>
                       <Icon type="cross" onClick={() => this.handleCloseSearchHistory()} />
                     </div>
                   </Flex.Item>
@@ -203,6 +203,35 @@ class Search extends PureComponent {
         </List>
       </div>
     );
+  };
+
+  removeCompareOrg = (org) => {
+    let {
+      compareOrg,
+      orgList,
+    } = this.state;
+    const index = compareOrg.findIndex(o => o.orgId === org.orgId);
+    if (index > -1) {
+      compareOrg.splice(index, 1);
+    }
+
+    orgList = orgList.map(o => {
+      const i = compareOrg.findIndex(c => o.orgId === c.orgId);
+      if (i > -1) {
+        return {
+          ...o,
+          compare: true,
+        }
+      }
+      return {
+        ...o,
+        compare: false,
+      }
+    });
+    this.setState({
+      compareOrg,
+      orgList,
+    });
   };
 
   handleCheckboxChange = (org, e) => {
@@ -290,7 +319,7 @@ class Search extends PureComponent {
             <Flex.Item style={{margin: 10}}>
               <Card>
                 <Card.Body>
-                  <div style={{position: 'absolute', top: -10, right: -10}}><Icon type="cross" /></div>
+                  <div onClick={() => this.removeCompareOrg(compareOrg[0])} style={{position: 'absolute', top: -10, right: -10}}><Icon type="cross" /></div>
                   <Ellipsis lines={2}>{compareOrg[0].orgName}</Ellipsis>
                 </Card.Body>
                 <Card.Footer content={compareOrg[0].creditScore} />
@@ -301,7 +330,7 @@ class Search extends PureComponent {
               <Card>
                 {count > 1 ? (
                   <Fragment>
-                    <div style={{position: 'absolute', top: -10, right: -10}}><Icon type="cross" /></div>
+                    <div onClick={() => this.removeCompareOrg(compareOrg[1])} style={{position: 'absolute', top: -10, right: -10}}><Icon type="cross" /></div>
                     <Card.Body>
                       <Ellipsis lines={2}>{compareOrg[1].orgName}</Ellipsis>
                     </Card.Body>
