@@ -25,10 +25,10 @@ const tabBarData = [
     link: '/category',
   },
   {
-    title: '搜索',
+    title: '购物车',
     icon: 'cart_icon',
     selectedIcon: 'cart_icon',
-    link: '/search',
+    link: '/shop',
   },
   {
     title: '我的',

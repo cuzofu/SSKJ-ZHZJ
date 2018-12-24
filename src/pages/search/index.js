@@ -7,19 +7,15 @@
 
 import React, {PureComponent, Fragment} from 'react';
 import {connect} from 'dva';
+import router from 'umi/router';
 import {SearchBar, WhiteSpace, WingBlank, NavBar, Icon, List, Badge, Tag, Card, Checkbox, Flex, Button} from 'antd-mobile';
 
 import styles from './index.less';
 import Ellipsis from "@/components/Ellipsis";
 
-const CompareButton = ({ content, type, disabled, ...restProps }) => (
-  <div className={styles.compareButton} {...restProps}>
-    <Button type={type} disabled={disabled} inline size="small">{content}</Button>
-  </div>
-);
-
-@connect(({search}) => ({
+@connect(({search, compare}) => ({
   search,
+  compare,
 }))
 class Search extends PureComponent {
 
@@ -123,16 +119,11 @@ class Search extends PureComponent {
   };
 
   handleCancel = () => {
-    const {
-      orgList,
-    } = this.state;
-    this.setState({
-      compareOrg: [],
-      orgList: orgList.map(o => ({
-        ...o,
-        compare: false,
-      }))
-    })
+    router.goBack();
+  };
+
+  handleCompare = () => {
+    router.push("/compare");
   };
 
   renderContent = () => {
@@ -206,6 +197,12 @@ class Search extends PureComponent {
   };
 
   removeCompareOrg = (org) => {
+    const {
+      dispatch,
+      compare: {
+        orgs
+      }
+    } = this.props;
     let {
       compareOrg,
       orgList,
@@ -226,6 +223,12 @@ class Search extends PureComponent {
       return {
         ...o,
         compare: false,
+      }
+    });
+    dispatch({
+      type: 'compare/save',
+      payload: {
+        orgs: compareOrg
       }
     });
     this.setState({
@@ -270,6 +273,13 @@ class Search extends PureComponent {
         compare: false,
       }
     });
+    const {dispatch} = this.props;
+    dispatch({
+      type: 'compare/save',
+      payload: {
+        orgs: compareOrg
+      }
+    });
     this.setState({
       compareOrg,
       orgList,
@@ -307,13 +317,12 @@ class Search extends PureComponent {
     );
   };
 
-  renderSearchResult = () => {
+  renderCompare = () => {
 
-    const { orgList, compareOrg } = this.state;
+    const { compareOrg } = this.state;
     const count = compareOrg.length;
-    let compareContent = null;
     if (count > 0) {
-      compareContent = (
+      return (
         <Fragment>
           <Flex>
             <Flex.Item style={{margin: 10}}>
@@ -325,7 +334,9 @@ class Search extends PureComponent {
                 <Card.Footer content={compareOrg[0].creditScore} />
               </Card>
             </Flex.Item>
-            <div><CompareButton type="primary" disabled={compareOrg.length < 2} content="比一比" /></div>
+            <div className={styles.compareButton}>
+              <Button type="primary" disabled={compareOrg.length < 2} inline size="small" onClick={this.handleCompare}>比一比</Button>
+            </div>
             <Flex.Item style={{margin: 10}}>
               <Card>
                 {count > 1 ? (
@@ -348,10 +359,15 @@ class Search extends PureComponent {
         </Fragment>
       );
     }
+    return null;
+  };
+
+  renderSearchResult = () => {
+
+    const { orgList } = this.state;
 
     return (
       <Fragment>
-        {compareContent}
         <List
           renderHeader={() => (
             <Flex>
@@ -379,8 +395,8 @@ class Search extends PureComponent {
         <NavBar
           mode="dark"
           icon={<Icon type="left" />}
-          leftContent={<span style={{width: 100}}>企业诚信查询</span>}
-          onLeftClick={() => console.log('onLeftClick')}
+          leftContent={<span style={{width: 100}}>企业查询</span>}
+          onLeftClick={() => router.goBack()}
         />
         <SearchBar
           onBlur={this.onSearchBarBlur}
@@ -390,7 +406,9 @@ class Search extends PureComponent {
           value={searchKeyword}
           onChange={this.handleChange}
           onSubmit={this.handleSearch}
+          onCancel={this.handleCancel}
         />
+        {this.renderCompare()}
         {this.renderContent()}
       </div>
     );

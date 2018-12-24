@@ -6,11 +6,18 @@
  */
 
 import React, { PureComponent } from 'react';
+import router from 'umi/router';
 import { Grid } from 'antd-mobile';
 
 import styles from './index.less';
 
 class Index extends PureComponent {
+
+  handleGridClick = (el) => {
+    console.log(el);
+    router.push(el.link);
+  };
+
   render() {
     const { route } = this.props;
     return (
@@ -22,11 +29,13 @@ class Index extends PureComponent {
               {
                 icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
                 text: '搜索',
-                url: 'rank',
+                action: 'search',
+                link: '/search',
               }
             ]}
             activeStyle={false}
             columnNum={2}
+            onClick={this.handleGridClick}
           />
         </div>
       </div>

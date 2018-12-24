@@ -5,8 +5,9 @@ export default [
     routes: [
       { path: '/', component: './index/index', title: '首页' },
       { path: '/category', component: './category/index', title: '分类' },
-      { path: '/search', component: './search/index', title: '搜索' },
       { path: '/test', component: './test/index', title: '测试页面' },
+      { path: '/search', component: './search/index', title: '搜索' },
+      { path: '/compare', component: './compare/index', title: '比一比' },
       {
         path: '/exception',
         component: '../layouts/ExceptionLayout',
