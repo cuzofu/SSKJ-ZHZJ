@@ -395,9 +395,10 @@ class Search extends PureComponent {
         <NavBar
           mode="dark"
           icon={<Icon type="left" />}
-          leftContent={<span style={{width: 100}}>企业查询</span>}
           onLeftClick={() => router.goBack()}
-        />
+        >
+          企业查询
+        </NavBar>
         <SearchBar
           onBlur={this.onSearchBarBlur}
           onFocus={this.onSearchBarFocus}

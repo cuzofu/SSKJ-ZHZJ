@@ -1,6 +1,54 @@
 @import '~antd-mobile/dist/antd-mobile.less';
 
-.compareButton {
+.compareFlex {
+  :global {
+    .am-flexbox-item {
+      margin-left: 0;
+    }
+  }
+}
+
+.compareFlexLeft {
+  margin-left: 5px;
+}
+
+.compareFlexRight {
+  margin-right: 5px;
+}
+
+.compareDiv {
+  height: 50px;
+  position: relative;
+  vertical-align: middle;
+  padding: 5px;
+  margin: 10px 5px;
+  background: #eff7ff;
+  border:0 solid darkslategray;
+  box-shadow: darkgrey 2px 2px 2px 2px ;
+  line-height: 20px;
+}
+
+.compareVS {
+  width: 50px;
   color: #bbb;
   text-align: center;
+  font-size: 28px;
+}
+
+.compareList {
+  :global {
+    .am-list-header {
+      background-color: silver;
+    }
+  }
+}
+
+.compareItem {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.compareRed {
+  color: red;
 }
